@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "LegacySamples"
 include(":app")
+include(":samplev6")
+include(":samplev5")
