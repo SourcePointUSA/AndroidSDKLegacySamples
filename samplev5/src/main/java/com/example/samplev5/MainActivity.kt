@@ -124,14 +124,6 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Composable
 fun Buttons(vararg buttons: Pair<String, () -> Unit>) {
     Column(
         modifier = Modifier
