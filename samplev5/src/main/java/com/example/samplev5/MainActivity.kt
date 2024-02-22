@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -32,6 +35,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private lateinit var mainViewGroup: ViewGroup
+    private var IABTCF_EnableAdvertiserConsentMode by mutableStateOf("")
+    private var IABTCF_TCString by mutableStateOf("")
 
     private fun showView(view: View) {
         if (view.parent == null) {
@@ -58,6 +63,12 @@ class MainActivity : ComponentActivity() {
                 consent.toString().split("\n").forEach { line ->
                     Log.i("TAG", line)
                 }
+                PreferenceManager.getDefaultSharedPreferences(this@MainActivity).apply {
+                    IABTCF_EnableAdvertiserConsentMode = getInt("IABTCF_EnableAdvertiserConsentMode", -1).toString()
+                    IABTCF_TCString = getString("IABTCF_TCString", "missing") ?: "missing"
+                }
+
+
             }
             .setOnError { Log.e("TAG", "Something went wrong") }
             .build()
@@ -69,7 +80,24 @@ class MainActivity : ComponentActivity() {
             LegacySamplesTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("CMP")
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Text(text = """
+                            IABTCF_EnableAdvertiserConsentMode: $IABTCF_EnableAdvertiserConsentMode
+                            
+                        """.trimIndent())
+                        Text(text = """
+                            IABTCF_TCString
+                            
+                            $IABTCF_TCString
+                            
+                        """.trimIndent())
+                    }
                     Buttons(
                         "Review Preferences" to { buildGDPRConsentLib().showPm() },
                         "Clear Preferences" to { PreferenceManager.getDefaultSharedPreferences(applicationContext).edit().clear().apply() },
