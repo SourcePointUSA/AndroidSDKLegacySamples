@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.samplev5"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.samplev5"
@@ -47,6 +47,8 @@ android {
 }
 
 dependencies {
+
+    implementation ("com.sourcepoint.cmplibrary:cmplibrary:5.3.13")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
