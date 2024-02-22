@@ -88,6 +88,10 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.Start
                     ) {
                         Text(text = """
+                            Version 5
+                            
+                        """.trimIndent())
+                        Text(text = """
                             IABTCF_EnableAdvertiserConsentMode: $IABTCF_EnableAdvertiserConsentMode
                             
                         """.trimIndent())
